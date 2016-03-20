@@ -11,16 +11,13 @@ namespace Game1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D texture;
+        Player player;
         Vector2 position;
-        Texture2D[,] spriteSheet = new Texture2D[8,8];
-        Texture2D chMech;
+        Texture2D[,] spriteSheet = new Texture2D[8,8];        
         float time;
         float frameTime = 0.1f;
         int frameIndex;
         const int totalFrames = 3;
-        int frameHeight = 64;
-        int frameWidth = 64;
 
         public Game1()
         {
@@ -39,8 +36,8 @@ namespace Game1
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            //position = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2 - 64, graphics
-               // .GraphicsDevice.Viewport.Height / 2 - 64);
+            position = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2 - 64, graphics
+                .GraphicsDevice.Viewport.Height / 2 - 64);
         }
 
         /// <summary>
@@ -58,9 +55,11 @@ namespace Game1
                 {
                     spriteSheet[i, j] = this.Content.Load<Texture2D>("Landscape/landscape_21");
                 }
-            }
-            chMech = this.Content.Load<Texture2D>("Characters/mech2_src");
+            }           
             // TODO: use this.Content to load your game content here
+
+            player = new Player(new Vector2(100,100));
+            player.LoadContent(Content);
         }
 
         /// <summary>
@@ -80,23 +79,17 @@ namespace Game1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.
-            //    Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    Exit();
-            KeyboardState state = Keyboard.GetState();
-            // TODO: Add your update logic here
-            if (state.IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.
+                Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (state.IsKeyDown(Keys.D))
-                chMech.position.X += 10;
-            if (state.IsKeyDown(Keys.A))
-                position.X -= 10;
-            if (state.IsKeyDown(Keys.W))
-                position.Y -= 10;
-            if (state.IsKeyDown(Keys.S))
-                position.Y += 10;
-                
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                player.ChangeAnimation(3);
+            }
+
+            player.Update(gameTime);
+                        
             base.Update(gameTime);
         }
 
@@ -115,7 +108,7 @@ namespace Game1
 
                 time = 0f;
             }
-            spriteBatch.Begin();
+            spriteBatch.Begin();            
             //spriteBatch.Draw(spriteSheet, position);
             for (int i = 0; i < spriteSheet.Length / 8; i++)
             {
@@ -123,16 +116,10 @@ namespace Game1
                 {
                     spriteBatch.Draw(spriteSheet[i, j], new Vector2(i * spriteSheet[i, j].Width / 2, j * spriteSheet[i, j].Height / 2));
                 }
-            }
+            }            
+            player.Draw(spriteBatch);
             spriteBatch.End();
-            // TODO: Add your drawing code here
-            //Rectangle source = new Rectangle(frameIndex * frameWidth, 0, frameWidth, frameHeight);
-            //Vector2 position = new Vector2(this.Window.ClientBounds.Width / 2,
-            //    this.Window.ClientBounds.Height / 2);
-            //Vector2 origin = new Vector2(frameWidth / 2.0f, frameHeight);
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(spriteSheet, position, source, Color.White,0.0f, origin,1.0f,SpriteEffects.None,0.0f);
-            //spriteBatch.End();         
+
             base.Draw(gameTime);
         }
     }
