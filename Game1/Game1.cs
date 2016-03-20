@@ -11,7 +11,7 @@ namespace Game1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Player player;
+        Enemy enemy;
         Vector2 position;
         Texture2D[,] spriteSheet = new Texture2D[8,8];        
         float time;
@@ -47,8 +47,7 @@ namespace Game1
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            //spriteSheet = this.Content.Load<Texture2D>("Landscape/landscape_17"); 
+            spriteBatch = new SpriteBatch(GraphicsDevice);            
             for (int i = 0; i < spriteSheet.Length / 8; i++)
             {
                 for (int j = 0; j < spriteSheet.Length / 8; j++)
@@ -58,8 +57,8 @@ namespace Game1
             }           
             // TODO: use this.Content to load your game content here
 
-            player = new Player(new Vector2(100,100));
-            player.LoadContent(Content);
+            enemy = new Enemy(new Vector2(100f,100f));
+            enemy.LoadContent(Content);
         }
 
         /// <summary>
@@ -82,13 +81,26 @@ namespace Game1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.
                 Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                player.ChangeAnimation(3);
-            }
-
-            player.Update(gameTime);
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.S))
+                enemy.ChangeAnimation("southwest");
+            else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
+                enemy.ChangeAnimation("southeast");
+            else if (state.IsKeyDown(Keys.D) & state.IsKeyDown(Keys.W))
+                enemy.ChangeAnimation("northeast");
+            else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.A))
+                enemy.ChangeAnimation("northwest");
+            else if (state.IsKeyDown(Keys.A))
+                enemy.ChangeAnimation("west");
+            else if (state.IsKeyDown(Keys.D))
+                enemy.ChangeAnimation("east");
+            else if (state.IsKeyDown(Keys.S))
+                enemy.ChangeAnimation("south");
+            else if (state.IsKeyDown(Keys.W))
+                enemy.ChangeAnimation("north");
+            else
+                enemy.ChangeAnimation("idle");
+            enemy.Update(gameTime);
                         
             base.Update(gameTime);
         }
@@ -117,7 +129,7 @@ namespace Game1
                     spriteBatch.Draw(spriteSheet[i, j], new Vector2(i * spriteSheet[i, j].Width / 2, j * spriteSheet[i, j].Height / 2));
                 }
             }            
-            player.Draw(spriteBatch);
+            enemy.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
