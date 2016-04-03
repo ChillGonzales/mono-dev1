@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace Game1
 {
@@ -13,11 +14,12 @@ namespace Game1
         SpriteBatch spriteBatch;
         Enemy enemy;
         Vector2 position;
-        Texture2D[,] spriteSheet = new Texture2D[8,8];        
+        Texture2D[,] spriteSheet = new Texture2D[10,10];        
         float time;
         float frameTime = 0.1f;
         int frameIndex;
         const int totalFrames = 3;
+        private bool bStartUp = true;
 
         public Game1()
         {
@@ -48,9 +50,9 @@ namespace Game1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);            
-            for (int i = 0; i < spriteSheet.Length / 8; i++)
+            for (int i = 0; i < spriteSheet.Length / 10; i++)
             {
-                for (int j = 0; j < spriteSheet.Length / 8; j++)
+                for (int j = 0; j < spriteSheet.Length / 10; j++)
                 {
                     spriteSheet[i, j] = this.Content.Load<Texture2D>("Landscape/landscape_21");
                 }
@@ -122,13 +124,15 @@ namespace Game1
             }
             spriteBatch.Begin();            
             //spriteBatch.Draw(spriteSheet, position);
-            for (int i = 0; i < spriteSheet.Length / 8; i++)
+            for (int i = 0; i < spriteSheet.Length / 10; i++)
             {
-                for(int j = 0; j < spriteSheet.Length / 8; j++)
+                for(int j = spriteSheet.Length / 10 - 1; j >= 0; j--)
                 {
-                    spriteBatch.Draw(spriteSheet[i, j], new Vector2(i * spriteSheet[i, j].Width / 2, j * spriteSheet[i, j].Height / 2));
+                    spriteBatch.Draw(spriteSheet[i, j], new Vector2((i * spriteSheet[i, j].Width / 2.02f) + (j * spriteSheet[i, j].Width / 2.02f)-100,
+                        ((i * spriteSheet[i,j].Height / 2.5f) - (j * spriteSheet[i,j].Height / 2.5f))+200));                                        
                 }
-            }            
+            }
+            bStartUp = false;
             enemy.Draw(spriteBatch);
             spriteBatch.End();
 
