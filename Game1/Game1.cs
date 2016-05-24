@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Game1.AssetClasses;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace Game1
 {
@@ -19,6 +21,8 @@ namespace Game1
         float frameTime = 0.1f;
         int frameIndex;
         const int totalFrames = 3;
+        public int screenX, screenY;
+        private bool pressed;
         //private bool bStartUp = true;
         private GameManager gameManager;
 
@@ -40,7 +44,9 @@ namespace Game1
 
             base.Initialize();
             position = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2 - 64, graphics
-                .GraphicsDevice.Viewport.Height / 2 - 64);            
+                .GraphicsDevice.Viewport.Height / 2 - 64);
+            screenX = graphics.GraphicsDevice.Viewport.Width / 2;
+            screenY = graphics.GraphicsDevice.Viewport.Height / 2;
         }
 
         /// <summary>
@@ -63,6 +69,7 @@ namespace Game1
             enemy = new Enemy(new Vector2(700f,25f));
             enemy.LoadContent(Content);
             gameManager = new GameManager();
+            gameManager.LoadContent(Content);
         }
 
         /// <summary>
@@ -86,13 +93,23 @@ namespace Game1
                 Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState state = Keyboard.GetState();
+            MouseState mstate = Mouse.GetState();
             if (state.IsKeyDown(Keys.S))
             {
                 gameManager.BeginGame(ref enemy);
             }
             if (state.IsKeyDown(Keys.T))
             {
-                gameManager.AddTower();
+                pressed = true;
+            }
+            if(state.IsKeyUp(Keys.T) && pressed)
+            {
+               pressed = false;
+               gameManager.AddTower(screenX, screenY);             
+            }            
+            if (mstate.LeftButton == ButtonState.Pressed)
+            {
+                gameManager.activeTower.firstClick = false;
             }
             //if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.S))
             //    enemy.ChangeAnimation("southwest");
@@ -113,6 +130,7 @@ namespace Game1
             //else
             //    enemy.ChangeAnimation("idle");            
             enemy.Update(gameTime);
+            //gameManager.Update();
                         
             base.Update(gameTime);
         }
