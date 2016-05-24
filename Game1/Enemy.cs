@@ -10,10 +10,15 @@ namespace Game1
 {
     class Enemy : AnimatedSprite
     {
-        //protected Dictionary<string, int> dictDirectionRef;
+        //public movementDirections ChangeDirection
+        //{
+        //    get { return currentDirection; }
+        //    set { this.ChangeAnimation(value); }
+        //}
         public Enemy(Vector2 position) : base(position)
         {
             framesPerSecond = 10;
+            idle = true;
         }
 
         public void LoadContent(ContentManager content)
@@ -21,21 +26,11 @@ namespace Game1
             sTexture = content.Load<Texture2D>("Characters/spritesheet");
             animCount = 8;
             AddAnimation(8);
-
-            //dictDirectionRef = new Dictionary<string, int>();
-            //dictDirectionRef.Add("east", 0);
-            //dictDirectionRef.Add("north", 1);
-            //dictDirectionRef.Add("northeast", 2);
-            //dictDirectionRef.Add("northwest", 3);
-            //dictDirectionRef.Add("south", 4);
-            //dictDirectionRef.Add("southeast", 5);
-            //dictDirectionRef.Add("southwest", 6);
-            //dictDirectionRef.Add("west", 7);
         }
 
-        public void ChangeAnimation(string direction)
+        public void ChangeDirection(movementDirections newDirection)
         {
-            if (direction == "idle")
+            if (newDirection == movementDirections.idle)
             {
                 idle = true;
                 return;
@@ -43,7 +38,8 @@ namespace Game1
             else
             {
                 idle = false;
-                animSelect = Array.IndexOf(DirectionRef, direction);
+                //animSelect = Array.IndexOf(DirectionRef, direction);
+                currentDirection = newDirection;
                 AddAnimation(8);
             }               
         }

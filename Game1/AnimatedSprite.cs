@@ -14,13 +14,13 @@ namespace Game1
         protected bool idle;
         private Vector2 sPosition;
         private Rectangle[] sRectangles;
-        private int frameIndex;
-        //protected Dictionary<string, int> dictDirectionRef = new Dictionary<string, int> { {"east", 0},{"north",1},
-        //                                                   {"northeast",2}, {"northwest",3}, {"south",4}, {"southeast",5}, {"southwest",6}, {"west",7} };
-        protected string[] DirectionRef = new string[8] {"east", "north", "northeast", "northwest", "south", "southeast", "southwest", "west"};
+        private int frameIndex;        
+        //protected string[] DirectionRef = new string[8] {"east", "north", "northeast", "northwest", "south", "southeast", "southwest", "west"};
         private double timeElapsed;
         private double timeToUpdate;
-        protected int animSelect = 0;
+        //protected int animSelect = 0;
+        public enum movementDirections { east=0, north=1, northeast=2, northwest=3, south=4, southeast=5, southwest=6, west=7, idle=8 };
+        protected movementDirections currentDirection;
 
         public int framesPerSecond
         {
@@ -38,7 +38,7 @@ namespace Game1
             sRectangles = new Rectangle[frames];
             for (int i = 0; i < frames; i++)
             {
-                sRectangles[i] = new Rectangle(i * width, (sTexture.Height/animCount) * animSelect, width, sTexture.Height / animCount);
+                sRectangles[i] = new Rectangle(i * width, (sTexture.Height/animCount) * (int)currentDirection, width, sTexture.Height / animCount);
             }
         }
 
@@ -63,39 +63,39 @@ namespace Game1
         {
             if (!idle)
             {                
-                switch (DirectionRef[animSelect])
+                switch (currentDirection)
                 {
-                    case "east":
+                    case movementDirections.east:
                         sPosition.X += 1;
                         break;
-                    case "north":
+                    case movementDirections.north:
                         sPosition.Y -= 1;
                         break;
-                    case "west":
+                    case movementDirections.west:
                         sPosition.X -= 1;
                         break;
-                    case "south":
+                    case movementDirections.south:
                         sPosition.Y += 1;
                         break;
-                    case "southwest":
+                    case movementDirections.southwest:
                         sPosition.X -= 0.5f;
                         sPosition.Y += 0.5f;
                         break;
-                    case "southeast":
+                    case movementDirections.southeast:
                         sPosition.X += 0.5f;
                         sPosition.Y += 0.5f;
                         break;
-                    case "northwest":
+                    case movementDirections.northwest:
                         sPosition.X -= 0.5f;
                         sPosition.Y -= 0.5f;
                         break;
-                    case "northeast":
+                    case movementDirections.northeast:
                         sPosition.X += 0.5f;
                         sPosition.Y -= 0.5f;
                         break;
                 } 
             }
-            spriteBatch.Draw(sTexture, sPosition,sRectangles[frameIndex], Color.White);
+            spriteBatch.Draw(sTexture, sPosition, sRectangles[frameIndex], Color.White);
         }
     }
 }

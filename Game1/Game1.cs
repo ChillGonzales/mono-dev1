@@ -14,12 +14,13 @@ namespace Game1
         SpriteBatch spriteBatch;
         Enemy enemy;
         Vector2 position;
-        Texture2D[,] spriteSheet = new Texture2D[10,10];        
+        Texture2D[,] spriteSheetBackground = new Texture2D[20,20];        
         float time;
         float frameTime = 0.1f;
         int frameIndex;
         const int totalFrames = 3;
-        private bool bStartUp = true;
+        //private bool bStartUp = true;
+        private GameManager gameManager;
 
         public Game1()
         {
@@ -39,7 +40,7 @@ namespace Game1
 
             base.Initialize();
             position = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2 - 64, graphics
-                .GraphicsDevice.Viewport.Height / 2 - 64);
+                .GraphicsDevice.Viewport.Height / 2 - 64);            
         }
 
         /// <summary>
@@ -50,17 +51,18 @@ namespace Game1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);            
-            for (int i = 0; i < spriteSheet.Length / 10; i++)
+            for (int i = 0; i < spriteSheetBackground.Length / 20; i++)
             {
-                for (int j = 0; j < spriteSheet.Length / 10; j++)
+                for (int j = 0; j < spriteSheetBackground.Length / 20; j++)
                 {
-                    spriteSheet[i, j] = this.Content.Load<Texture2D>("Landscape/landscape_21");
+                    spriteSheetBackground[i, j] = this.Content.Load<Texture2D>("Landscape/landscape_21");
                 }
             }           
             // TODO: use this.Content to load your game content here
 
-            enemy = new Enemy(new Vector2(100f,100f));
+            enemy = new Enemy(new Vector2(700f,25f));
             enemy.LoadContent(Content);
+            gameManager = new GameManager();
         }
 
         /// <summary>
@@ -84,24 +86,32 @@ namespace Game1
                 Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.S))
-                enemy.ChangeAnimation("southwest");
-            else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
-                enemy.ChangeAnimation("southeast");
-            else if (state.IsKeyDown(Keys.D) & state.IsKeyDown(Keys.W))
-                enemy.ChangeAnimation("northeast");
-            else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.A))
-                enemy.ChangeAnimation("northwest");
-            else if (state.IsKeyDown(Keys.A))
-                enemy.ChangeAnimation("west");
-            else if (state.IsKeyDown(Keys.D))
-                enemy.ChangeAnimation("east");
-            else if (state.IsKeyDown(Keys.S))
-                enemy.ChangeAnimation("south");
-            else if (state.IsKeyDown(Keys.W))
-                enemy.ChangeAnimation("north");
-            else
-                enemy.ChangeAnimation("idle");
+            if (state.IsKeyDown(Keys.S))
+            {
+                gameManager.BeginGame(ref enemy);
+            }
+            if (state.IsKeyDown(Keys.T))
+            {
+                gameManager.AddTower();
+            }
+            //if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.S))
+            //    enemy.ChangeAnimation("southwest");
+            //else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
+            //    enemy.ChangeAnimation("southeast");
+            //else if (state.IsKeyDown(Keys.D) & state.IsKeyDown(Keys.W))
+            //    enemy.ChangeAnimation("northeast");
+            //else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.A))
+            //    enemy.ChangeAnimation("northwest");
+            //else if (state.IsKeyDown(Keys.A))
+            //    enemy.ChangeAnimation("west");
+            //else if (state.IsKeyDown(Keys.D))
+            //    enemy.ChangeAnimation("east");
+            //else if (state.IsKeyDown(Keys.S))
+            //    enemy.ChangeAnimation("south");
+            //else if (state.IsKeyDown(Keys.W))
+            //    enemy.ChangeAnimation("north");
+            //else
+            //    enemy.ChangeAnimation("idle");            
             enemy.Update(gameTime);
                         
             base.Update(gameTime);
@@ -119,21 +129,21 @@ namespace Game1
             while (time > frameTime)
             {
                 frameIndex++;
-
                 time = 0f;
             }
             spriteBatch.Begin();            
             //spriteBatch.Draw(spriteSheet, position);
-            for (int i = 0; i < spriteSheet.Length / 10; i++)
+            for (int i = 0; i < spriteSheetBackground.Length / 20; i++)
             {
-                for(int j = spriteSheet.Length / 10 - 1; j >= 0; j--)
+                for(int j = spriteSheetBackground.Length / 20 - 1; j >= 0; j--)
                 {
-                    spriteBatch.Draw(spriteSheet[i, j], new Vector2((i * spriteSheet[i, j].Width / 2.02f) + (j * spriteSheet[i, j].Width / 2.02f)-100,
-                        ((i * spriteSheet[i,j].Height / 2.5f) - (j * spriteSheet[i,j].Height / 2.5f))+200));                                        
+                    spriteBatch.Draw(spriteSheetBackground[i, j], new Vector2((i * spriteSheetBackground[i, j].Width / 2.02f) + (j * spriteSheetBackground[i, j].Width / 2.02f)-500,
+                        ((i * spriteSheetBackground[i,j].Height / 2.5f) - (j * spriteSheetBackground[i,j].Height / 2.5f))+200));                                        
                 }
             }
-            bStartUp = false;
+            //bStartUp = false;
             enemy.Draw(spriteBatch);
+            gameManager.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
