@@ -12,11 +12,6 @@ namespace Game1
     {
         class Enemy : AnimatedSprite
         {
-            //public movementDirections ChangeDirection
-            //{
-            //    get { return currentDirection; }
-            //    set { this.ChangeAnimation(value); }
-            //}
             public Enemy(Vector2 position) : base(position)
             {
                 framesPerSecond = 10;

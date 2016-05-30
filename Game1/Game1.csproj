@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssetClasses\AnimatedSprite.cs" />
+    <Compile Include="AssetClasses\RedProjectile.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="AssetClasses\Enemy.cs" />
     <Compile Include="GameManager.cs" />

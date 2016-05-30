@@ -40,15 +40,15 @@ namespace Game1
         {
             if (towerList != null)
             {
-                foreach (var item in towerList)
+                foreach (var tower in towerList)
                 {
-                    item.Update();
+                    tower.Update();
                 }
             }
         }
         public void LoadContent(ContentManager content)
         {
-            towerTexture = content.Load<Texture2D>("Landscape/landscape_00");
+            towerTexture = content.Load<Texture2D>("Buildings/tower_35");
         }
 
         public void Draw(SpriteBatch spriteBatch)

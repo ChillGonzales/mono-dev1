@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Game1.Physics;
 
 namespace Game1
 {
@@ -18,6 +19,7 @@ namespace Game1
             private Vector2 towerPos;
             public bool firstClick;
             private int screenX, screenY;
+            public CircleCollider2D CircleCollider;
 
             public Tower(Vector2 pos, Texture2D _towerTexture, int _screenX, int _screenY)
             {
@@ -26,6 +28,7 @@ namespace Game1
                 towerTexture = _towerTexture;
                 screenX = _screenX;
                 screenY = _screenY;
+                CircleCollider = new CircleCollider2D(towerPos, 10.0f);
             }
 
             public void Update()
@@ -34,7 +37,10 @@ namespace Game1
                 {
                     towerPos.X = Cursor.Position.X - screenX;
                     towerPos.Y = Cursor.Position.Y - screenY;
+                    CircleCollider.Center = towerPos;
                 }
+                //if (CircleCollider.Contains())
+
             }
             public void Draw(SpriteBatch spriteBatch)
             {

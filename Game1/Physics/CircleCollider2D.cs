@@ -8,11 +8,11 @@ using Microsoft.Xna.Framework;
 namespace Game1.Physics
 {
     public struct CircleCollider2D
-    {
-        public Vector2 Center { get; set; }
-        public float Radius { get; set; }
+    {        
+        public Vector2 Center { get;  set; }
+        public float Radius { get;  set; }
 
-        public CircleCollider2D(Vector2 center, float radius)
+        public CircleCollider2D(Vector2 center, float radius) : this()
         {
             Center = center;
             Radius = radius;
@@ -25,7 +25,7 @@ namespace Game1.Physics
 
         public bool Intersects(CircleCollider2D other)
         {
-            return ((other.Center)-Center).Length() < (other.Radius - Radius));
+            return ((other.Center)-Center).Length() < (other.Radius - Radius);
         }
     }
 }

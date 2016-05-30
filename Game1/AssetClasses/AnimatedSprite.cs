@@ -21,6 +21,7 @@ namespace Game1
             private double timeElapsed;
             private double timeToUpdate;
             //protected int animSelect = 0;
+            public Vector2 Position { get { return sPosition; } }
             public enum movementDirections { east = 0, north = 1, northeast = 2, northwest = 3, south = 4, southeast = 5, southwest = 6, west = 7, idle = 8 };
             protected movementDirections currentDirection;
 
