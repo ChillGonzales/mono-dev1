@@ -39,7 +39,10 @@ namespace Game1
                     towerPos.Y = Cursor.Position.Y - screenY;
                     CircleCollider.Center = towerPos;
                 }
-                //if (CircleCollider.Contains())
+                if (CircleCollider.Contains())
+                {
+
+                }
 
             }
             public void Draw(SpriteBatch spriteBatch)

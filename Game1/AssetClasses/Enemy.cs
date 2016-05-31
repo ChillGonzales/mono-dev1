@@ -10,7 +10,7 @@ namespace Game1
 {
     namespace AssetClasses
     {
-        class Enemy : AnimatedSprite
+        public class Enemy : AnimatedSprite
         {
             public Enemy(Vector2 position) : base(position)
             {

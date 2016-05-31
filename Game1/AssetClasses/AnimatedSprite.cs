@@ -9,7 +9,7 @@ namespace Game1
 {
     namespace AssetClasses
     {
-        abstract class AnimatedSprite
+        public abstract class AnimatedSprite
         {
             protected Texture2D sTexture;
             protected int animCount;

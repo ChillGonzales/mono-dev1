@@ -19,10 +19,12 @@ namespace Game1
         private List<Tower> towerList;
         private Texture2D towerTexture;
         public Tower activeTower;
-        public void BeginGame(ref Enemy enemyInst)
+        private List<Enemy> enemyList;
+        public void BeginGame(ref List<Enemy> enemyListInst)
         {
             gameStarted = true;
-            enemyInst.ChangeDirection(AnimatedSprite.movementDirections.southwest);
+            enemyList = enemyListInst;
+            //enemyListInst.ChangeDirection(AnimatedSprite.movementDirections.southwest);
         }
 
         public void AddTower(int screenX, int screenY)
@@ -44,6 +46,10 @@ namespace Game1
                 {
                     tower.Update();
                 }
+            }
+            if (gameStarted)
+            {
+                
             }
         }
         public void LoadContent(ContentManager content)

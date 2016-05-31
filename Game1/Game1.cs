@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Game1.AssetClasses;
 using System.Diagnostics;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace Game1
 {
@@ -18,6 +19,7 @@ namespace Game1
         Vector2 position;
         Texture2D[,] spriteSheetBackground = new Texture2D[20,20];        
         float time;
+        protected List<Enemy> enemyList;
         float frameTime = 0.1f;
         int frameIndex;
         const int totalFrames = 3;
@@ -63,11 +65,13 @@ namespace Game1
                 {
                     spriteSheetBackground[i, j] = this.Content.Load<Texture2D>("Landscape/landscape_21");
                 }
-            }           
+            }
             // TODO: use this.Content to load your game content here
 
             enemy = new Enemy(new Vector2(700f,25f));
             enemy.LoadContent(Content);
+            enemyList = new List<Enemy>();
+            enemyList.Add(enemy);
             gameManager = new GameManager();
             gameManager.LoadContent(Content);
         }
@@ -96,7 +100,7 @@ namespace Game1
             MouseState mstate = Mouse.GetState();
             if (state.IsKeyDown(Keys.S))
             {
-                gameManager.BeginGame(ref enemy);
+                gameManager.BeginGame(ref enemyList);
             }
             if (state.IsKeyDown(Keys.T))
             {
