@@ -13,6 +13,7 @@ namespace Game1
     /// </summary>
     public class Game1 : Game
     {
+        #region "Declarations"
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Enemy enemy;
@@ -27,6 +28,7 @@ namespace Game1
         private bool pressed;
         //private bool bStartUp = true;
         private GameManager gameManager;
+        #endregion
 
         public Game1()
         {
@@ -115,27 +117,10 @@ namespace Game1
             {
                 gameManager.activeTower.firstClick = false;
             }
-            //if (state.IsKeyDown(Keys.A) && state.IsKeyDown(Keys.S))
-            //    enemy.ChangeAnimation("southwest");
-            //else if (state.IsKeyDown(Keys.D) && state.IsKeyDown(Keys.S))
-            //    enemy.ChangeAnimation("southeast");
-            //else if (state.IsKeyDown(Keys.D) & state.IsKeyDown(Keys.W))
-            //    enemy.ChangeAnimation("northeast");
-            //else if (state.IsKeyDown(Keys.W) && state.IsKeyDown(Keys.A))
-            //    enemy.ChangeAnimation("northwest");
-            //else if (state.IsKeyDown(Keys.A))
-            //    enemy.ChangeAnimation("west");
-            //else if (state.IsKeyDown(Keys.D))
-            //    enemy.ChangeAnimation("east");
-            //else if (state.IsKeyDown(Keys.S))
-            //    enemy.ChangeAnimation("south");
-            //else if (state.IsKeyDown(Keys.W))
-            //    enemy.ChangeAnimation("north");
-            //else
-            //    enemy.ChangeAnimation("idle");            
+
             enemy.Update(gameTime);
-            //gameManager.Update();
-                        
+            gameManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 

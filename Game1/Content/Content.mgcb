@@ -529,7 +529,7 @@
 /processorParam:TextureFormat=Color
 /build:Buildings/tower_36.png
 
-#begin Projectiles/blood-projectile-spritesheet-red.png
+#begin Projectiles\RedProjectile.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -539,5 +539,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Projectiles/blood-projectile-spritesheet-red.png
+/build:Projectiles\RedProjectile.png
 

@@ -16,11 +16,9 @@ namespace Game1
             protected bool idle;
             private Vector2 sPosition;
             private Rectangle[] sRectangles;
-            private int frameIndex;
-            //protected string[] DirectionRef = new string[8] {"east", "north", "northeast", "northwest", "south", "southeast", "southwest", "west"};
+            private int frameIndex;            
             private double timeElapsed;
-            private double timeToUpdate;
-            //protected int animSelect = 0;
+            private double timeToUpdate;            
             public Vector2 Position { get { return sPosition; } }
             public enum movementDirections { east = 0, north = 1, northeast = 2, northwest = 3, south = 4, southeast = 5, southwest = 6, west = 7, idle = 8 };
             protected movementDirections currentDirection;
