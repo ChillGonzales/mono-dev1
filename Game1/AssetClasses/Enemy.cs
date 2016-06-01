@@ -40,6 +40,44 @@ namespace Game1
                     AddAnimation(8);
                 }
             }
+
+            public override void DrawFrame()
+            {
+                if (!idle)
+                {
+                    switch (currentDirection)
+                    {
+                        case movementDirections.east:
+                            sPosition.X += 1;
+                            break;
+                        case movementDirections.north:
+                            sPosition.Y -= 1;
+                            break;
+                        case movementDirections.west:
+                            sPosition.X -= 1;
+                            break;
+                        case movementDirections.south:
+                            sPosition.Y += 1;
+                            break;
+                        case movementDirections.southwest:
+                            sPosition.X -= 0.5f;
+                            sPosition.Y += 0.5f;
+                            break;
+                        case movementDirections.southeast:
+                            sPosition.X += 0.5f;
+                            sPosition.Y += 0.5f;
+                            break;
+                        case movementDirections.northwest:
+                            sPosition.X -= 0.5f;
+                            sPosition.Y -= 0.5f;
+                            break;
+                        case movementDirections.northeast:
+                            sPosition.X += 0.5f;
+                            sPosition.Y -= 0.5f;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Game1
                 {                    
                     foreach (var enemy in enemyList)
                     {
-                        if (tower.CircleCollider.Contains(enemy.Position)){
+                        if (tower.CircleCollider.Contains(enemy.Position) && tower.active){
                             tower.SetTarget = enemy.Position;
                         }
                     }

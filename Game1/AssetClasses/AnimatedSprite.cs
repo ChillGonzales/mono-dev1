@@ -14,7 +14,7 @@ namespace Game1
             protected Texture2D sTexture;
             protected int animCount;
             protected bool idle;
-            private Vector2 sPosition;
+            protected Vector2 sPosition;
             private Rectangle[] sRectangles;
             private int frameIndex;            
             private double timeElapsed;
@@ -60,42 +60,11 @@ namespace Game1
                 }
             }
 
+            public abstract void DrawFrame();
+
             public void Draw(SpriteBatch spriteBatch)
             {
-                if (!idle)
-                {
-                    switch (currentDirection)
-                    {
-                        case movementDirections.east:
-                            sPosition.X += 1;
-                            break;
-                        case movementDirections.north:
-                            sPosition.Y -= 1;
-                            break;
-                        case movementDirections.west:
-                            sPosition.X -= 1;
-                            break;
-                        case movementDirections.south:
-                            sPosition.Y += 1;
-                            break;
-                        case movementDirections.southwest:
-                            sPosition.X -= 0.5f;
-                            sPosition.Y += 0.5f;
-                            break;
-                        case movementDirections.southeast:
-                            sPosition.X += 0.5f;
-                            sPosition.Y += 0.5f;
-                            break;
-                        case movementDirections.northwest:
-                            sPosition.X -= 0.5f;
-                            sPosition.Y -= 0.5f;
-                            break;
-                        case movementDirections.northeast:
-                            sPosition.X += 0.5f;
-                            sPosition.Y -= 0.5f;
-                            break;
-                    }
-                }
+                DrawFrame();
                 spriteBatch.Draw(sTexture, sPosition, sRectangles[frameIndex], Color.White);
             }
         }

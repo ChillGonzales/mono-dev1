@@ -19,11 +19,13 @@ namespace Game1
             private Texture2D towerTexture;
             private Vector2 towerPos;
             public bool firstClick;
+            public bool active;
             private int screenX, screenY;
             public CircleCollider2D CircleCollider;
             private double timeElapsed;
             private double fireRate = 1f;
             private Vector2 currentTarget;
+            private List<RedProjectile> projectileList;
             public Vector2 SetTarget { get; set; }
             public Texture2D SetProjectile { get; set; }
 
@@ -34,7 +36,6 @@ namespace Game1
                 towerTexture = _towerTexture;
                 screenX = _screenX;
                 screenY = _screenY;
-                CircleCollider = new CircleCollider2D(towerPos, 100.0f);
             }
 
             public void Update(GameTime gameTime)
@@ -43,22 +44,52 @@ namespace Game1
                 {
                     towerPos.X = Cursor.Position.X - screenX;
                     towerPos.Y = Cursor.Position.Y - screenY;
-                    CircleCollider.Center = towerPos;
+                    active = false;
+                }
+                else
+                {
+                    if (!active)
+                    {
+                        CircleCollider = new CircleCollider2D(towerPos, 75.0f);
+                        CircleCollider.Center = towerPos;
+                    }                    
+                    active = true;
                 }
                 timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
                 if (timeElapsed > fireRate) {
                     timeElapsed -= fireRate;
                     FireProjectile();
                 }
+                if (projectileList != null)
+                {
+                    foreach (var proj in projectileList)
+                    {
+                        proj.Update(gameTime);
+                    }
+                }
             }
 
             public void Draw(SpriteBatch spriteBatch)
             {
                 spriteBatch.Draw(towerTexture, towerPos, Color.White);
+                if (projectileList != null)
+                {
+                    foreach (var proj in projectileList){
+                        proj.Draw(spriteBatch);
+                    }
+                }
             }
 
             public void FireProjectile()
-            {                
+            {
+                if (projectileList == null)
+                {
+                    projectileList = new List<RedProjectile>();
+                }
+                var projectile = new RedProjectile(this.towerPos);
+                projectile.SetTexture(SetProjectile);
+                projectile.Fire(SetTarget);
+                projectileList.Add(projectile);
                 Debug.Print("Projectile Fired!" + Environment.NewLine);
             }            
         }
