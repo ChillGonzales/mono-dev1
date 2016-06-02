@@ -28,6 +28,7 @@ namespace Game1
             private List<RedProjectile> projectileList;
             public Vector2 SetTarget { get; set; }
             public Texture2D SetProjectile { get; set; }
+            public bool targetAcquired;
 
             public Tower(Vector2 pos, Texture2D _towerTexture, int _screenX, int _screenY)
             {
@@ -50,15 +51,19 @@ namespace Game1
                 {
                     if (!active)
                     {
-                        CircleCollider = new CircleCollider2D(towerPos, 75.0f);
+                        CircleCollider = new CircleCollider2D(towerPos, 400.0f);
                         CircleCollider.Center = towerPos;
                     }                    
                     active = true;
                 }
-                timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
-                if (timeElapsed > fireRate) {
-                    timeElapsed -= fireRate;
-                    FireProjectile();
+                if (targetAcquired)
+                {
+                    timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
+                    if (timeElapsed > fireRate)
+                    {
+                        timeElapsed -= fireRate;
+                        FireProjectile();
+                    }
                 }
                 if (projectileList != null)
                 {

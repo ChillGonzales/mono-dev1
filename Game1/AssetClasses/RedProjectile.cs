@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Windows;
+using Game1.Physics;
 
 namespace Game1.AssetClasses
 {
@@ -14,6 +15,7 @@ namespace Game1.AssetClasses
     {
         private bool flyAnim, explodeAnim, firing;
         private Vector2 currentTarget;
+        private CircleCollider2D CircleCollider;
 
         public RedProjectile(Vector2 position) : base(position)
         {
@@ -23,16 +25,12 @@ namespace Game1.AssetClasses
             animCount = 1;
             idle = false;
             currentDirection = movementDirections.east;
-            
-            
+            CircleCollider = new CircleCollider2D(this.sPosition, 100f);
         }
         public override void DrawFrame()
-        {
-            if (firing)
-            {
-                var distanceToTarget = new Vector2(currentTarget.X - this.sPosition.X, currentTarget.Y - this.sPosition.Y);                
-                sPosition = distanceToTarget;
-            }
+        {            
+            var distanceToTarget = new Vector2(currentTarget.X - this.sPosition.X, currentTarget.Y - this.sPosition.Y);                
+            sPosition += distanceToTarget/50;            
         }
         public void Fire(Vector2 target)
         {

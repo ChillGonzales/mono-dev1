@@ -27,7 +27,7 @@ namespace Game1
         public void BeginGame(ref List<Enemy> enemyListInst)
         {
             gameStarted = true;
-            enemyList = enemyListInst;            
+            enemyList = enemyListInst;
             enemyListInst[0].ChangeDirection(AnimatedSprite.movementDirections.southwest);
         }
 
@@ -55,6 +55,11 @@ namespace Game1
                     {
                         if (tower.CircleCollider.Contains(enemy.Position) && tower.active){
                             tower.SetTarget = enemy.Position;
+                            tower.targetAcquired = true;
+                        }
+                        else
+                        {
+                            tower.targetAcquired = false;
                         }
                     }
                 }                
