@@ -29,6 +29,7 @@ namespace Game1
             gameStarted = true;
             enemyList = enemyListInst;
             enemyListInst[0].ChangeDirection(AnimatedSprite.movementDirections.southwest);
+            
         }
 
         public void AddTower(int screenX, int screenY)
@@ -71,6 +72,10 @@ namespace Game1
                     tower.Update(gameTime);
                 }
             }
+        }
+        public void SpawnEnemy()
+        {
+
         }
         public void LoadContent(ContentManager content)
         {

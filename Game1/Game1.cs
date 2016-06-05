@@ -28,6 +28,8 @@ namespace Game1
         private bool pressed;
         //private bool bStartUp = true;
         private GameManager gameManager;
+        public delegate void EventHandler();
+        public event EventHandler SpawnEnemyEvent;
         #endregion
 
         public Game1()
@@ -68,7 +70,7 @@ namespace Game1
                     spriteSheetBackground[i, j] = this.Content.Load<Texture2D>("Landscape/landscape_21");
                 }
             }
-            // TODO: use this.Content to load your game content here
+            // TODO: use this.Content to load your game content here            
 
             enemy = new Enemy(new Vector2(700f,25f));
             enemy.LoadContent(Content);
@@ -76,6 +78,7 @@ namespace Game1
             enemyList.Add(enemy);
             gameManager = new GameManager();
             gameManager.LoadContent(Content);
+            SpawnEnemyEvent += new EventHandler(gameManager.SpawnEnemy);
         }
 
         /// <summary>
